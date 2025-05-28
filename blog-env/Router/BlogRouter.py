@@ -42,7 +42,7 @@ def update_blog(id: int, request: BlogUpdate, db: Session = Depends(get_db)):
 
 @router.delete('/delete/{id}')
 def delete_blog(id: int, db: Session = Depends(get_db)):
-    blog = db.query(CreateBlog).filter(CreateBlog.id == id).all()
+    blog = db.query(CreateBlog).filter(CreateBlog.id == id).first()
     if not blog:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'The id: {id} not found')
     val = blog.title
