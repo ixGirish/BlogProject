@@ -47,5 +47,5 @@ def delete_blog(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'The id: {id} not found')
     val = blog.title
     db.delete(blog)
-    db.commit()
+    db.commit() 
     return {"message": f"The blog with title '{val}' is deleted"}
