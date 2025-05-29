@@ -19,7 +19,6 @@ class User(Base):
     password = Column(String(255)) 
     
     blogs=relationship("CreateBlog", back_populates="Creator")
-
     fileUser=relationship("FileHandling" , back_populates="files")
 
 class FileHandling(Base):
