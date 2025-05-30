@@ -36,7 +36,6 @@ def update_blog(id: int, request: BlogUpdate, db: Session = Depends(get_db)):
 
     for key, value in updated_data.items():
         setattr(blog, key, value)
-
     db.commit()
     return {"message": "Blog updated successfully", "updated_fields": updated_data}
 
