@@ -12,7 +12,6 @@ SECRET_KEY = "ytitirirejd40598yu5053g0e^%$3fj9448tufow485uteogwjtj4yhugojwi4utgj
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 300
 
-
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
@@ -31,6 +30,6 @@ def verify_token(token: str = Depends(oauth2_scheme), db: Session = Depends(get_
             raise HTTPException(status_code=401, detail="User not found")
 
         return user
-
+    
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")

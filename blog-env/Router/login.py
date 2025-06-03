@@ -25,7 +25,7 @@ def loginfunction(db:Session=Depends(get_db),form_data:OAuth2PasswordRequestForm
         data={"sub": user.email},
         expires_delta=access_token_expires
     )
-
+    
     return {
         "access_token": access_token,
         "token_type": "bearer"

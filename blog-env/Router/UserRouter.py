@@ -10,7 +10,6 @@ router=APIRouter(prefix="/user", tags=["Users"])
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-
 @router.post('/send')
 def createUser(request:setUser,db:Session=Depends(get_db)):
     hashpassword=pwd_context.hash(request.password)

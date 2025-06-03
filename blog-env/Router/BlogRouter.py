@@ -51,7 +51,7 @@ def get_all_posts(
     page_info = {
         "pageNo": (actual_skip // actual_limit) + 1,
         "totalPages": (total + actual_limit - 1) // actual_limit,
-        "total": total
+        "totalElements": total
     }
 
     # Conditionally include skip and limit if they were passed in query
@@ -60,10 +60,8 @@ def get_all_posts(
     if limit is not None:
         page_info["limit"] = limit
 
-    return {
-        "pageInfo": page_info,
-        "data": data
-    }
+    return {   "pageInfo": page_info,
+        "data": data}
 
 @router.patch('/update/{id}')
 def update_blog(id: int, request: BlogUpdate, db: Session = Depends(get_db)):
