@@ -44,7 +44,7 @@ def get_all_posts(
             "title": blog.title,
             "content": blog.content,
             "user": {"id": blog.userId}
-        })
+        }).model_dump()
         for blog in blogs
     ]
 
@@ -60,8 +60,10 @@ def get_all_posts(
     if limit is not None:
         page_info["limit"] = limit
 
-    return {   "pageInfo": page_info,
-        "data": data}
+    return JSONResponse(content={
+        "pageInfo": page_info,
+        "data": data
+    })
 
 @router.patch('/update/{id}')
 def update_blog(id: int, request: BlogUpdate, db: Session = Depends(get_db)):
