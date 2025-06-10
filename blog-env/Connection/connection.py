@@ -5,7 +5,11 @@ from sqlalchemy.orm import sessionmaker
 DATABASE_URL = "mssql+pyodbc://girish:GNBu4Ya5xV@ix.innovatechs.com/TRAINING?driver=ODBC Driver 17 for SQL Server"
 
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(DATABASE_URL, 
+    pool_size=2,
+    max_overflow=0,
+    pool_timeout=2,     # Optional: time to wait before erroring
+    connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 

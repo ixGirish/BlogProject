@@ -12,7 +12,7 @@ router = APIRouter(prefix="/blog", tags=["Blogs"])
 
 @router.post('/send')
 def create_blog(request: setBlog, db: Session = Depends(get_db), current_user: User = Depends(verify_token)):
-    new_blog = CreateBlog(title=request.title, content=request.content,userId=current_user.id)
+    new_blog = CreateBlog(request=request,userId=current_user.id)
     db.add(new_blog)
     db.commit()
     db.refresh(new_blog)
@@ -46,6 +46,7 @@ def get_all_posts(
             "user": {"id": blog.userId}
         }).model_dump()
         for blog in blogs
+
     ]
 
     page_info = {

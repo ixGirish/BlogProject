@@ -1,9 +1,11 @@
+from concurrent.futures import ThreadPoolExecutor
 from io import BytesIO
 from Security.auth import verify_token
 from fastapi import APIRouter, Depends,UploadFile,File,HTTPException,status
 from fastapi.responses import StreamingResponse
+from sqlalchemy import text
 from sqlalchemy.orm import Session
-from Connection.connection import get_db
+from Connection.connection import get_db,SessionLocal
 from Models.BlogModel import FileHandling, User
 from datetime import date
 
@@ -25,6 +27,7 @@ def fileUpload(db:Session=Depends(get_db),file:UploadFile=File(...), current_use
     db.refresh(db_file)
     return f"file added with id: {db_file.id}"
 
+
 @router.get('/{id}')
 def fileDownload(id:int,db:Session=Depends(get_db)):
     db_file=db.query(FileHandling).filter(FileHandling.id==id).first()
@@ -35,3 +38,4 @@ def fileDownload(id:int,db:Session=Depends(get_db)):
         media_type=db_file.type,
         headers={"Content-Disposition": f"attachment; filename={db_file.name}"}
     )
+
